@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Random;
+
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 
@@ -27,6 +29,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	boolean isRabbitSelected = true; //know when to switch between rabbit and mouse
 
+	Random random;
+	float r, g, b;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -39,27 +44,54 @@ public class MyGdxGame extends ApplicationAdapter {
 		//there isn't a reason to worry about memory
 		//the float number 0.2f is the speed of the animation. smaller number = faster animation
 		rabbitIdle = new Animation(0.2f, new TextureRegion(new Texture("Rabbitidle1.png")),
-										 new TextureRegion(new Texture("Rabbitidle2.png")),
-										 new TextureRegion(new Texture("Rabbitidle3.png")),
-										 new TextureRegion(new Texture("Rabbitidle4.png")),
-										 new TextureRegion(new Texture("Rabbitidle5.png")),
-										 new TextureRegion(new Texture("Rabbitidle6.png")),
-										 new TextureRegion(new Texture("Rabbitidle7.png")));
+				new TextureRegion(new Texture("Rabbitidle2.png")),
+				new TextureRegion(new Texture("Rabbitidle3.png")),
+				new TextureRegion(new Texture("Rabbitidle4.png")),
+				new TextureRegion(new Texture("Rabbitidle5.png")),
+				new TextureRegion(new Texture("Rabbitidle6.png")),
+				new TextureRegion(new Texture("Rabbitidle7.png")));
 		rabbitIdle.setPlayMode(Animation.PlayMode.LOOP); //will loop from 1 to 7 then start back at 1
 
 		mouseIdle = new Animation(0.2f, new TextureRegion(new Texture("Mouseidle1.png")),
-										new TextureRegion(new Texture("Mouseidle2.png")),
-										new TextureRegion(new Texture("Mouseidle3.png")),
-										new TextureRegion(new Texture("Mouseidle4.png")),
-										new TextureRegion(new Texture("Mouseidle5.png")));
+				new TextureRegion(new Texture("Mouseidle2.png")),
+				new TextureRegion(new Texture("Mouseidle3.png")),
+				new TextureRegion(new Texture("Mouseidle4.png")),
+				new TextureRegion(new Texture("Mouseidle5.png")));
 		mouseIdle.setPlayMode(Animation.PlayMode.LOOP); // same for every sprite you have
 
 		isRabbitSelected = true; //double initialize just to make sure you didnt forget
+
+		random = new Random();
+
+		Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener(){
+			@Override
+			public void onUp()
+			{
+
+			}
+			@Override
+			public void onDown()
+			{
+
+			}
+			@Override
+			public void onLeft()
+			{
+
+			}
+			@Override
+			public void onRight()
+			{
+				r = random.nextFloat();
+				g = random.nextFloat();
+				b = random.nextFloat();
+			}
+		}));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(r, g, b, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		//this gets confusing. if you dont have seperate methods for drawing and updating the render method
@@ -71,7 +103,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void drawScene()
 	{
 		batch.begin();
-		batch.draw(rabbitIdle.getKeyFrame(animationTime), 100, 100); // this gets the frame of the animation and draw it at 200, 200
+		//batch.draw(rabbitIdle.getKeyFrame(animationTime), 100, 100); // this gets the frame of the animation and draw it at 200, 200
 		batch.draw(mouseIdle.getKeyFrame(animationTime), 200, 200);
 		batch.end();
 
