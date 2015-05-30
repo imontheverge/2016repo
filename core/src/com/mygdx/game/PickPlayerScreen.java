@@ -7,6 +7,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by christian on 5/29/2015.
@@ -16,11 +20,21 @@ public class PickPlayerScreen implements Screen {
 
     OrthographicCamera camera;
 
+    Texture RabbitSelect;
+    Texture MouseSelect;
+    Rectangle RabbitRect;
+    Rectangle MouseRect;
+
     public PickPlayerScreen(MyGdxGame game)
     {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        RabbitSelect = new Texture("Rabbitidle1.png");
+        MouseSelect = new Texture("Mouseidle1.png");
+
+        RabbitRect = new Rectangle(50, 250, RabbitSelect.getWidth(), RabbitSelect.getHeight());
+        MouseRect = new Rectangle(350, 250, MouseSelect.getWidth(), MouseSelect.getHeight());
     }
 
     @Override
@@ -34,11 +48,26 @@ public class PickPlayerScreen implements Screen {
 
         game.batch.begin();
         game.font.draw(game.batch, "Tap a character", 100, 100);
+        game.batch.draw(RabbitSelect, RabbitRect.getX(), RabbitRect.getY());
+        game.batch.draw(MouseSelect, MouseRect.getX(), MouseRect.getY());
         game.batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             game.setScreen(new PlayGameScreen(game));
             dispose();
+        }
+
+        Vector3 tempCoords = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(tempCoords);
+
+        if(RabbitRect.contains(tempCoords.x, tempCoords.y)){
+            game.setScreen(new PlayGameScreen(game));
+            game.player = new Rabbit();
+        }
+
+        if(MouseRect.contains(tempCoords.x, tempCoords.y)){
+            game.setScreen(new PlayGameScreen(game));
+            game.player = new Mouse();
         }
     }
 

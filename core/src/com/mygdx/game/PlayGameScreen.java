@@ -23,9 +23,6 @@ public class PlayGameScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
 
-    Rabbit rabbit;
-    Mouse mouse;
-
     public PlayGameScreen (final MyGdxGame gam) {
         this.game = gam;
         camera = new OrthographicCamera(); //every libgdx needs a camera;
@@ -56,8 +53,6 @@ public class PlayGameScreen implements Screen {
             }
         }));
 
-        rabbit = new Rabbit();
-        mouse = new Mouse();
     }
 
     @Override
@@ -76,8 +71,7 @@ public class PlayGameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        rabbit.DrawPlayer(game.batch, animationTime, 200, 200);
-        mouse.DrawPlayer(game.batch, animationTime, 100, 100);
+        game.player.DrawPlayer(game.batch, animationTime, 100, 100);
         game.batch.end();
 
         // in libgdx 0, 0 is the bottom left of the screen which is just straight retarded.

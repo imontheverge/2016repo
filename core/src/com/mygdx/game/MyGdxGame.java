@@ -18,6 +18,7 @@ public class MyGdxGame extends Game {
 
 	SpriteBatch batch;
 	BitmapFont font;
+	Player player;
 
 	public void create()
 	{
