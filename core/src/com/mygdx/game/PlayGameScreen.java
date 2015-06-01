@@ -49,7 +49,11 @@ public class PlayGameScreen implements Screen {
             @Override
             public void onRight()
             {
-
+                game.player.velocity.y += 0.5f;
+                if(game.player.velocity.y >= game.maxUpwardVelocity.y)
+                {
+                    game.player.velocity.y = game.maxUpwardVelocity.y;
+                }
             }
         }));
 
@@ -71,7 +75,8 @@ public class PlayGameScreen implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.player.DrawPlayer(game.batch, animationTime, 100, 100);
+        game.player.DrawPlayer(game.batch, animationTime);
+        game.font.draw(game.batch, "Velocity: " + game.player.velocity, 400, 200 );
         game.batch.end();
 
         // in libgdx 0, 0 is the bottom left of the screen which is just straight retarded.
@@ -81,6 +86,14 @@ public class PlayGameScreen implements Screen {
     {
         float deltaTime = Gdx.graphics.getDeltaTime(); //just getting milliseconds or whatever libgdx uses
         animationTime += deltaTime; //update the animation.
+
+        game.player.velocity.y -= 0.01f;
+        if(game.player.velocity.y <= game.maxGravity.y)
+        {
+            game.player.velocity.y = game.maxGravity.y;
+        }
+
+        game.player.UpdatePlayer(animationTime);
     }
 
     @Override

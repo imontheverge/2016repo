@@ -63,11 +63,19 @@ public class PickPlayerScreen implements Screen {
         if(RabbitRect.contains(tempCoords.x, tempCoords.y)){
             game.setScreen(new PlayGameScreen(game));
             game.player = new Rabbit();
+            game.player.position = new Vector2();
+            game.player.velocity = new Vector2();
+            game.player.position.x = game.startPosX;
+            game.player.position.y = game.startPosY;
         }
 
         if(MouseRect.contains(tempCoords.x, tempCoords.y)){
             game.setScreen(new PlayGameScreen(game));
             game.player = new Mouse();
+            game.player.position = new Vector2();
+            game.player.velocity = new Vector2();
+            game.player.position.x= game.startPosX;
+            game.player.position.y = game.startPosY;
         }
     }
 

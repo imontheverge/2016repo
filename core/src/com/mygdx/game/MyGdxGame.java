@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,12 +20,19 @@ public class MyGdxGame extends Game {
 	SpriteBatch batch;
 	BitmapFont font;
 	Player player;
+	float startPosX;
+	float startPosY;
+	Vector2 maxGravity = new Vector2(0, -1);
+	Vector2 maxUpwardVelocity = new Vector2(0, 2);
 
 	public void create()
 	{
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		this.setScreen(new PickPlayerScreen(this));
+
+		startPosX = Gdx.graphics.getWidth() / 2 - 150;
+		startPosY = Gdx.graphics.getHeight() / 2 - 150;
 	}
 
 	public void render()
