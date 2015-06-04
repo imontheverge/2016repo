@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -15,20 +18,28 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PlayGameScreen implements Screen {
     final MyGdxGame game;
 
-    private Animation rabbitIdle; //creates the libgdx animation object.
-    private Animation mouseIdle;
-
     private float animationTime;
+
+    Texture background;
+    Sprite backgroundSprite;
 
     private OrthographicCamera camera;
     private Viewport viewport;
+    float WORLD_HEIGHT = 50;
+    float WORLD_WIDTH = 15;
 
     public PlayGameScreen (final MyGdxGame gam) {
+        float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
+
         this.game = gam;
-        camera = new OrthographicCamera(); //every libgdx needs a camera;
+        camera = new OrthographicCamera(WORLD_HEIGHT * aspectRatio, 25); //every libgdx needs a camera;
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera); // set the viewport to view what the camera sees
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //camera.setToOrtho(false, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         animationTime = 0.0f;
+
+        background = new Texture("background.png");
+        backgroundSprite = new Sprite(background);
+        backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener(){
             @Override
@@ -72,9 +83,11 @@ public class PlayGameScreen implements Screen {
 
     private void drawScene()
     {
+        camera.position.set(game.player.position.x + 150, game.player.position.y + 150, 0);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+        game.batch.draw(backgroundSprite, -100, 0);
         game.player.DrawPlayer(game.batch, animationTime);
         game.font.draw(game.batch, "Velocity: " + game.player.velocity, 400, 200 );
         game.batch.end();
@@ -99,7 +112,7 @@ public class PlayGameScreen implements Screen {
     @Override
     public void resize(int width, int height)
     {
-
+        viewport.update(width, height);
     }
 
     @Override
