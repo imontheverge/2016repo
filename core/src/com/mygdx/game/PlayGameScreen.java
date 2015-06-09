@@ -9,8 +9,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by christian on 5/29/2015.
@@ -27,6 +31,10 @@ public class PlayGameScreen implements Screen {
     private Viewport viewport;
     float WORLD_HEIGHT = 50;
     float WORLD_WIDTH = 15;
+
+    float velocityResetTimer = 10f;
+    float previousVelSwipe;
+    float swipeVelocity = 5f;
 
     public PlayGameScreen (final MyGdxGame gam) {
         float aspectRatio = (float)Gdx.graphics.getHeight()/(float)Gdx.graphics.getWidth();
@@ -60,10 +68,17 @@ public class PlayGameScreen implements Screen {
             @Override
             public void onRight()
             {
-                game.player.velocity.y += 0.5f;
+                /*game.player.velocity.y += 0.5f;
                 if(game.player.velocity.y >= game.maxUpwardVelocity.y)
                 {
                     game.player.velocity.y = game.maxUpwardVelocity.y;
+                }*/
+
+                if(velocityResetTimer > 0.1f)
+                {
+                        previousVelSwipe = swipeVelocity;
+                    swipeVelocity = previousVelSwipe / 2;
+                    game.player.velocity.y += swipeVelocity;
                 }
             }
         }));
@@ -89,8 +104,16 @@ public class PlayGameScreen implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundSprite, -100, 0);
         game.player.DrawPlayer(game.batch, animationTime);
-        game.font.draw(game.batch, "Velocity: " + game.player.velocity, 400, 200 );
+
         game.batch.end();
+
+        game.guiBatch.begin();
+        game.font.draw(game.guiBatch, "Velocity: " + game.player.velocity, 400, 200);
+        game.font.draw(game.guiBatch, "Timer: " + velocityResetTimer, 200, 300);
+        game.font.draw(game.guiBatch, "PrevVelocitySwipe: " + previousVelSwipe, 200, 400);
+        game.font.draw(game.guiBatch, "CurrentVelocitySwipe: " + swipeVelocity, 200, 500);
+        game.guiBatch.end();
+
 
         // in libgdx 0, 0 is the bottom left of the screen which is just straight retarded.
     }
@@ -107,6 +130,13 @@ public class PlayGameScreen implements Screen {
         }
 
         game.player.UpdatePlayer(animationTime);
+
+        velocityResetTimer -= Gdx.graphics.getDeltaTime();
+        if(velocityResetTimer <= 0)
+        {
+            velocityResetTimer = 5;
+            swipeVelocity = 5;
+        }
     }
 
     @Override
@@ -144,4 +174,7 @@ public class PlayGameScreen implements Screen {
     {
 
     }
+
 }
+
+

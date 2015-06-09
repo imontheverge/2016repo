@@ -10,14 +10,17 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Random;
+import java.util.Timer;
 
 public class MyGdxGame extends Game {
 
 	SpriteBatch batch;
+	SpriteBatch guiBatch;
 	BitmapFont font;
 	Player player;
 	float startPosX;
@@ -28,6 +31,7 @@ public class MyGdxGame extends Game {
 	public void create()
 	{
 		batch = new SpriteBatch();
+		guiBatch = new SpriteBatch();
 		font = new BitmapFont();
 		this.setScreen(new PickPlayerScreen(this));
 
