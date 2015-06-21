@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -14,6 +15,7 @@ public class Player {
     public Animation playerIdleAnimation;
     Vector2 velocity;
     Vector2 position;
+    public Rectangle playerRectangle;
 
     public float scaleX = 1;
     public float scaleY = 1;
@@ -29,5 +31,6 @@ public class Player {
     public void UpdatePlayer(float animationTime)
     {
         position.add(velocity);
+        playerRectangle = new Rectangle(position.x, position.y, playerIdleAnimation.getKeyFrame(animationTime).getRegionWidth(), playerIdleAnimation.getKeyFrame(animationTime).getRegionHeight());
     }
 }

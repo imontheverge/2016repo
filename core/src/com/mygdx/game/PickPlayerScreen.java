@@ -22,6 +22,9 @@ public class PickPlayerScreen implements Screen {
 
     Texture RabbitSelect;
     Texture MouseSelect;
+    Texture CatSelect;
+
+    Rectangle CatRect;
     Rectangle RabbitRect;
     Rectangle MouseRect;
 
@@ -32,9 +35,11 @@ public class PickPlayerScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         RabbitSelect = new Texture("Rabbitidle1.png");
         MouseSelect = new Texture("Mouseidle1.png");
+        CatSelect = new Texture("catidle1.png");
 
         RabbitRect = new Rectangle(50, 250, RabbitSelect.getWidth(), RabbitSelect.getHeight());
         MouseRect = new Rectangle(350, 250, MouseSelect.getWidth(), MouseSelect.getHeight());
+        CatRect = new Rectangle(50, 450, CatSelect.getWidth(), CatSelect.getHeight());
     }
 
     @Override
@@ -50,6 +55,7 @@ public class PickPlayerScreen implements Screen {
         game.font.draw(game.batch, "Tap a character", 100, 100);
         game.batch.draw(RabbitSelect, RabbitRect.getX(), RabbitRect.getY());
         game.batch.draw(MouseSelect, MouseRect.getX(), MouseRect.getY());
+        game.batch.draw(CatSelect, CatRect.getX(), CatRect.getY());
         game.batch.end();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
@@ -72,6 +78,15 @@ public class PickPlayerScreen implements Screen {
         if(MouseRect.contains(tempCoords.x, tempCoords.y)){
             game.setScreen(new PlayGameScreen(game));
             game.player = new Mouse();
+            game.player.position = new Vector2();
+            game.player.velocity = new Vector2();
+            game.player.position.x= game.startPosX;
+            game.player.position.y = game.startPosY;
+        }
+
+        if(CatRect.contains(tempCoords.x, tempCoords.y)){
+            game.setScreen(new PlayGameScreen(game));
+            game.player = new Cat();
             game.player.position = new Vector2();
             game.player.velocity = new Vector2();
             game.player.position.x= game.startPosX;
