@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -69,10 +70,12 @@ public class PickPlayerScreen implements Screen {
         if(RabbitRect.contains(tempCoords.x, tempCoords.y)){
             game.setScreen(new PlayGameScreen(game));
             game.player = new Rabbit();
+            game.player.sprite = new Sprite();
             game.player.position = new Vector2();
             game.player.velocity = new Vector2();
-            game.player.position.x = game.startPosX;
-            game.player.position.y = game.startPosY;
+            //game.player.sprite.setPosition();position.x = game.startPosX;
+            //game.player.position.y = game.startPosY;
+            game.player.sprite.setPosition(game.startPosX, game.startPosY);
         }
 
         if(MouseRect.contains(tempCoords.x, tempCoords.y)){
@@ -80,8 +83,9 @@ public class PickPlayerScreen implements Screen {
             game.player = new Mouse();
             game.player.position = new Vector2();
             game.player.velocity = new Vector2();
-            game.player.position.x= game.startPosX;
-            game.player.position.y = game.startPosY;
+            //game.player.position.x= game.startPosX;
+            //game.player.position.y = game.startPosY;
+            game.player.sprite.setPosition(game.startPosX, game.startPosY);
         }
 
         if(CatRect.contains(tempCoords.x, tempCoords.y)){
@@ -89,8 +93,9 @@ public class PickPlayerScreen implements Screen {
             game.player = new Cat();
             game.player.position = new Vector2();
             game.player.velocity = new Vector2();
-            game.player.position.x= game.startPosX;
-            game.player.position.y = game.startPosY;
+            //game.player.position.x= game.startPosX;
+            //game.player.position.y = game.startPosY;
+            game.player.sprite.setPosition(game.startPosX, game.startPosY);
         }
     }
 

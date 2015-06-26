@@ -127,7 +127,7 @@ import java.util.TimerTask;
             /////////////////////
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.RED);
-            shapeRenderer.rect(game.player.position.x, game.player.position.y, 200, 200);
+            shapeRenderer.rect(game.player.sprite.getX(), game.player.sprite.getY(), 200, 200);
             shapeRenderer.end();
             /////////////////////
 
