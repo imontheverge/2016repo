@@ -52,7 +52,7 @@ public class PickPlayerScreen implements Screen {
 
         RabbitRect = new Rectangle(100, 200, RabbitSelect.getWidth(), RabbitSelect.getHeight());
         MouseRect = new Rectangle(1, 250, MouseSelect.getWidth(), MouseSelect.getHeight());
-        CatRect = new Rectangle(200, 150, CatSelect.getWidth(), CatSelect.getHeight());
+        CatRect = new Rectangle(400, 150, CatSelect.getWidth(), CatSelect.getHeight());
 
         shapeRenderer = new ShapeRenderer();
     }
@@ -73,6 +73,7 @@ public class PickPlayerScreen implements Screen {
         game.batch.draw(CatSelect, CatRect.getX(), CatRect.getY());
         game.batch.end();
 
+        shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(CatRect.x, CatRect.y, CatRect.width, CatRect.height);

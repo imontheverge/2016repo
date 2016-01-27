@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.awt.Rectangle;
 import java.util.Random;
 import java.util.Timer;
 
@@ -25,9 +26,9 @@ public class MyGdxGame extends Game {
 	Player player;
 	float startPosX;
 	float startPosY;
-	Vector2 maxGravity = new Vector2(0, -1);
+	Vector2 maxGravity = new Vector2(0, -2);
 	Vector2 maxUpwardVelocity = new Vector2(0, 2);
-
+	Rectangle screenRect;
 
 	public void create()
 	{
@@ -36,8 +37,9 @@ public class MyGdxGame extends Game {
 		font = new BitmapFont();
 		this.setScreen(new PickPlayerScreen(this));
 
-		startPosX = Gdx.graphics.getWidth() / 2 - 150;
-		startPosY = Gdx.graphics.getHeight() / 2 - 150;
+		startPosX = Gdx.graphics.getWidth() / 2;
+		startPosY = Gdx.graphics.getHeight() / 2;
+
 	}
 
 	public void render()

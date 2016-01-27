@@ -23,16 +23,13 @@ public class Player {
     {
         TextureRegion region = playerIdleAnimation.getKeyFrame(animationTime);
 
-        sprite = new Sprite(playerIdleAnimation.getKeyFrame(animationTime));
-        sprite.setScale(1);
+        batch.draw(region, position.x, position.y);
 
-        //batch.draw(sprite, sprite.getX(), sprite.getY(), 0, 0, sprite.getWidth(), sprite.getHeight(), sprite.getScaleX(), sprite.getScaleY(), 0);
-        sprite.draw(batch);
     }
 
     public void UpdatePlayer(float animationTime)
     {
-        //sprite.setPosition(velocity.x, -3);
+        position.add(velocity);
         playerRectangle = new Rectangle(position.x, position.y, playerIdleAnimation.getKeyFrame(animationTime).getRegionWidth(), playerIdleAnimation.getKeyFrame(animationTime).getRegionHeight());
     }
 }
